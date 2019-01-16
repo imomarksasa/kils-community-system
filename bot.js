@@ -133,7 +133,7 @@ client.on('guildMemberAdd',async member => {
     if(welcome[member.guild.id].onoff === 'Off') return;
     const Canvas = require('canvas');
     const jimp = require('jimp');
-    const w = ['./welcome_4.png'];
+    const w = ['./welcome.png'];
           let Image = Canvas.Image,
               canvas = new Canvas(800, 300),
               ctx = canvas.getContext('2d');
@@ -177,7 +177,7 @@ client.on('guildMemberAdd',async member => {
             let ava = new Avatar;
             ava.src = buf;
             ctx.beginPath();
-            ctx.arc(169.5, 148, 120.9, -100, Math.PI * 2, true);
+            ctx.arc(169.5, 148, 126.9, -100, Math.PI * 2, true);
             ctx.closePath();
             ctx.clip();
             ctx.drawImage(ava, 36, 21, 260, 260);
