@@ -15,7 +15,32 @@ client.on('ready', () => {
 /////////////////////////////////تجربت اكواد
 
 
-
+client.on('message',function(message) {
+ if(!message.channel.guild) return;    let messageArray = message.content.split(' ');
+    let muteRole =  message.guild.roles.find('name', 'Muted');
+    let muteMember = message.mentions.members.first();
+    let muteReason = messageArray[2];
+    let muteDuration = messageArray[3];
+ if (message.content.split(" ")[0].toLowerCase() === prefix + "mute") {
+           
+  if (message.author.bot) return;
+       if(!muteRole) return message.guild.createRole({name: 'Muted'}).then(message.guild.channels.forEach(chan => chan.overwritePermissions(muteRole, {SEND_MESSAGES:false,ADD_REACTIONS:false})));
+       if(!message.guild.member(message.author).hasPermission("MANAGE_ROLES")) return message.channel.send(' Error : You Need `` MANAGE_ROLES ``Permission ');
+       if(!message.guild.member(client.user).hasPermission("MANAGE_ROLES")) return message.channel.send(' Error : I Don’t Have `` MANAGE_ROLES ``Permission ');
+       if(!muteMember) return message.channel.send(' Error : ``Mention a User``').then(message => message.delete(4000))
+       if(!muteReason) return message.channel.send(' Error : ``Supply a Reason``').then(message => message.delete(4000))
+       if(!muteDuration) return message.channel.send(' Error : `` Supply Mute Time `` \n Ex: #mute @user reason 1m ').then(message => message.delete(4000))
+       if(!muteDuration.match(/[1-7][s,m,h,d,w]/g)) return message.channel.send(' Error : `` Invalid Mute Duration``').then(message => message.delete(4000))
+       message.channel.send(`${muteMember} Has Been Muted.`).then(message => message.delete(5000))
+       muteMember.addRole(muteRole);
+       muteMember.setMute(true)
+       .then(() => { setTimeout(() => {
+           muteMember.removeRole(muteRole)
+           muteMember.setMute(false)
+       }, mmss(muteDuration));
+       });
+   }
+});
 
 
 
@@ -485,55 +510,7 @@ client.on("message", message => {
 
 
 
-client.on('message',function(message) {
 
-    let messageArray = message.content.split(' ');
-
-    let muteRole = message.guild.roles.get('534995060484210689') || message.guild.roles.find('name', 'Muted');
-
-    let muteMember = message.mentions.members.first();
-
-    let muteDuration = messageArray[2];
-
-    let muteReason = messageArray[3];
-
-
-   if(message.content.startsWith(prefix + "اسكت")) {
-
-       if(!muteRole) return message.guild.createRole({name: 'Muted'}).then(message.guild.channels.forEach(chan => chan.overwritePermissions(muteRole, {SEND_MESSAGES:false,ADD_REACTIONS:false})));
-
-       if(!message.guild.member(message.author).hasPermission("MANAGE_ROLES")) return message.channel.send('ℹ **Error:** ``خصائص مفقودة``');
-
-       if(!message.guild.member(client.user).hasPermission("MANAGE_ROLES")) return message.channel.send('ℹ **Error:** ``خصائص مفقودة مني``');
-
-       if(!muteMember) return message.channel.send('ℹ **Error:** ``منشن شخص``');
-       
-       if(!muteDuration) return message.channel.send('ℹ **Error:** ``حدد وقت زمني``');
-
-       if(!muteReason) return message.channel.send('ℹ **Error:** ``حدد سباّ``');
-
-
-       if(!muteDuration.match(/[1-7][s,m,h,d,w]/g)) return message.channel.send('ℹ **Error:** ``حدد وقت زمني صحيح``');
-
-       message.channel.send(`✅ **تم اعطاء العضو ميوت : ${muteMember}**`);
-
-       muteMember.addRole(muteRole);
-
-       muteMember.setMute(true)
-
-       .then(() => { setTimeout(() => {
-
-           muteMember.removeRole(muteRole)
-
-           muteMember.setMute(false)
-
-       }, mmss(muteDuration));
-
-       });
-
-   }
-
-});
 
 //////////////////////
 
