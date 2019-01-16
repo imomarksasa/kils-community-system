@@ -135,7 +135,7 @@ client.on('guildMemberAdd',async member => {
     const jimp = require('jimp');
     const w = ['./welcome.png'];
           let Image = Canvas.Image,
-              canvas = new Canvas(820, 400),
+              canvas = new Canvas(830, 420),
               ctx = canvas.getContext('2d');
           ctx.patternQuality = 'bilinear';
           ctx.filter = 'bilinear';
@@ -151,7 +151,7 @@ client.on('guildMemberAdd',async member => {
               let BG = Canvas.Image;
               let ground = new Image;
               ground.src = Background;
-              ctx.drawImage(ground, 0, 0, 820, 400);
+              ctx.drawImage(ground, 0, 0, 830, 420);
    
   })
    
@@ -177,7 +177,7 @@ client.on('guildMemberAdd',async member => {
             let ava = new Avatar;
             ava.src = buf;
             ctx.beginPath();
-            ctx.arc(169.5, 200, 126.9, -100, Math.PI * 2, true);
+            ctx.arc(169.5, 150, 126.9, -100, Math.PI * 2, true);
             ctx.closePath();
             ctx.clip();
             ctx.drawImage(ava, 36, 21, 260, 260);
