@@ -177,7 +177,7 @@ client.on('guildMemberAdd',async member => {
             let ava = new Avatar;
             ava.src = buf;
             ctx.beginPath();
-            ctx.arc(77, 151, 62, 0, Math.PI*2);
+            ctx.arc(169.5, 148, 126.9, -100, Math.PI * 2, true);
             ctx.closePath();
             ctx.clip();
             ctx.drawImage(ava, 13, 38, 128, 126);
