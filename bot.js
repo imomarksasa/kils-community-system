@@ -703,10 +703,10 @@ client.on('message',function(message) {
 ////////////////////////////////اشياء اخري
 
 client.on("guildMemberAdd", (member) => {
-client.channels.get('529505719045718026').edit({name : `ᒥ الأعضاء ⇐ ${member.guild.memberCount} ᒧ`});
+client.channels.get('535473761495941141').edit({name : `ᒥ الأعضاء ⇐ ${member.guild.memberCount} ᒧ`});
 })
 client.on("guildMemberRemove", (member) => {
-client.channels.get('529505719045718026').edit({name : `ᒥ الأعضاء ⇐ ${member.guild.memberCount} ᒧ`});
+client.channels.get('535473761495941141').edit({name : `ᒥ الأعضاء ⇐ ${member.guild.memberCount} ᒧ`});
 })
 
 
