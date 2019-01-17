@@ -659,18 +659,6 @@ msg.reply('**ۏ؏ــڷــﯧْۧــڬــمۭ ۛ ּا̍ڶــڛۣــﻼ̍ۙ�
 
 //////////////////////////////////////////////////اوامر ممنوع تعملها
 
-///اي واحد يخرج ياخد باند
-client.on('guildMemberRemove', async function(member) {
-  try {
-    await member.ban({
-      days: 7,
-      reason: 'Automatic Softban to Remove Messages'
-    });
-  } catch (e) {
-    console.log(e);
-  }
-})
-
 
 
 
