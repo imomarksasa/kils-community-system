@@ -180,7 +180,7 @@ client.on('guildMemberAdd',async member => {
             ctx.arc(184.5, 232, 128.9, -100, Math.PI * 2, true);
             ctx.closePath();
             ctx.clip();
-            ctx.drawImage(ava, 36, 21, 270, 335);
+            ctx.drawImage(ava, 36, 21, 275, 340);
              
             let c = member.guild.channels.find('name', `${welcome[member.guild.id].channel}`)
             if(!c) return;
