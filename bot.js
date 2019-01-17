@@ -161,17 +161,17 @@ client.on('guildMemberAdd',async member => {
                       ava.getBuffer(jimp.MIME_PNG, (err, buf) => {
                    if (err) return console.log(err);
    
-            ctx.font = '36px Arial';
-            ctx.fontSize = '80px';
+            ctx.font = '40px Arial';
+            ctx.fontSize = '72px';
             ctx.fillStyle = "#b1b1b1";
             ctx.textAlign = "center";
             ctx.fillText(member.user.username, 500, 262);
            
-            ctx.font = '16px Arial Bold';
-            ctx.fontSize = '80px';
+            ctx.font = '20px Arial Bold';
+            ctx.fontSize = '72px';
             ctx.fillStyle = "#ffffff";
             ctx.textAlign = "center";
-            ctx.fillText(`${member.guild.memberCount} Members`, 400, 330);
+            ctx.fillText(`${member.guild.memberCount} Members`, 410, 330);
            
             let Avatar = Canvas.Image;
             let ava = new Avatar;
