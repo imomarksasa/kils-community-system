@@ -163,13 +163,13 @@ client.on('guildMemberAdd',async member => {
    
             ctx.font = '40px Arial';
             ctx.fontSize = '72px';
-            ctx.fillStyle = "#b1b1b1";
+            ctx.fillStyle = "#ffffff";
             ctx.textAlign = "center";
             ctx.fillText(member.user.username, 500, 262);
            
             ctx.font = '28px Arial Bold';
             ctx.fontSize = '72px';
-            ctx.fillStyle = "#18cff8";
+            ctx.fillStyle = "#7be7fa";
             ctx.textAlign = "center";
             ctx.fillText(`${member.guild.memberCount} Members`, 401, 325);
            
