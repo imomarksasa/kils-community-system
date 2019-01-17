@@ -745,7 +745,7 @@ const invites = {};
 const wait = require('util').promisify(setTimeout);
 
 client.on('ready', () => {
-  wait(5000);
+  wait(10000);
 
   client.guilds.forEach(g => {
     g.fetchInvites().then(guildInvites => {
