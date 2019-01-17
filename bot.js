@@ -204,9 +204,6 @@ message.author.send(`
 **
 [❖─═════ {✯ :globe_with_meridians: الأوامر العامه ✯} ═════─❖]
 اذا منشنت البوت يرد عليك ➥: منشن البوت
-%invite-link :➥ لمعرفت روابط الانفيت حقك
-%invites :➥ لمعرفت كم شخص دخلته السيرفر
-%topinv :➥ توب انفيت
 %ping :➥ لمعرفة سرعة استجابة البوت في الوقت الحالي
 %server :➥ يعرض معلومات السيرفر
 %id :➥ يعرض معلوماتك
@@ -240,114 +237,6 @@ client.user.setStatus("dnd")
 
 
 
-
-
-
-
-
-
-client.on("message", async message => {
-            if(!message.channel.guild) return;
-        if(message.content.startsWith(prefix + 'invites')) {
-        var nul = 0
-        var leave = 0
-        var guild = message.guild
-        await guild.fetchInvites()
-
-             
-            .then(invites => {
-             invites.forEach(invite => {
-                if (invite.inviter === message.author) {
-                     nul+=invite.uses
-                    }
-                });
-            });
-          if (nul > 0) {
-              console.log(`\n${message.author.tag} has ${nul} invites in ${guild.name}\n`)
-              var embed = new Discord.RichEmbed()
-                  .setColor("#000000")
-                    .addField(`${message.author.username}`, `**لقد دعوت ${nul} شخص
-                    **`)
-                          message.channel.send({ embed: embed });
-                      return;
-                    } else {
-                       var embed = new Discord.RichEmbed()
-                        .setColor("#000000")
-                        .addField(`${message.author.username}`, `**لم تدعو اي شخص للسيرفر**`)
-
-                       message.channel.send({ embed: embed });
-                        return;
-                    }
-        }
-    
-        if(message.content.startsWith(prefix + 'invite-link')) {
-let guild = message.guild
-var codes = [""]
-message.channel.send("**تم ارسال رابط الدعوه الخاص بك الي الخاص**")
-guild.fetchInvites()
-.then(invites => {
-invites.forEach(invite => {
-if (invite.inviter === message.author) {
-codes.push(`discord.gg/${invite.code}`)
-}
-})
-}).then(m => {
-if (codes.length < 0) {
-    var embed = new Discord.RichEmbed()
-.setColor("#000000")
-.addField(`Your invite codes in ${message.guild.name}`, `**ليس لديك اي رابط إنفايت في السيرفر!**`)
-message.author.send({ embed: embed });
-return;
-} else {
-    var embed = new Discord.RichEmbed()
-.setColor("#000000")
-.addField(`روابط الإنفايت الخاصه بك في سيرفر ${message.guild.name}`, `الروابط :point_down: :\n${codes.join("\n")}`)
-message.author.send({ embed: embed });
-return;
-}
-})
-}
-
-});
-
-
-
-
-
-
-
-
-
-client.on('message',message =>{
-    var prefix = "%";
-    if(message.content.startsWith(prefix + 'topinv')) {
-  message.guild.fetchInvites().then(i =>{
-  var invites = [];
-   
-  i.forEach(inv =>{
-    var [invs,i]=[{},null];
-     
-    if(inv.maxUses){
-        invs[inv.code] =+ inv.uses+"/"+inv.maxUses;
-    }else{
-        invs[inv.code] =+ inv.uses;
-    }
-        invites.push(`**invite:** ${inv.inviter} \`${invs[inv.code]}\`;`);
-   
-  });
-  var embed = new Discord.RichEmbed()
-  .setColor("#000000")
-  .setDescription(`${invites.join(`\n`)+'\n\n**By:** '+message.author}`)
-  .setThumbnail("https://d.top4top.net/p_1074mpt301.png")
-           message.channel.send({ embed: embed });
-   
-  });
-   
-    }
-  });
-
-
-
 client.on('message', message => {
             if (message.content.startsWith("%help")) {
      let embed = new Discord.RichEmbed()
@@ -357,13 +246,6 @@ client.on('message', message => {
   message.channel.sendEmbed(embed);
     }
 });
-
-
-
-
-
-
-
 
 
 
