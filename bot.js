@@ -537,18 +537,6 @@ client.channels.get('535473761495941141').edit({name : `ᒥ الأعضاء ⇐ $
 
 
 
-
-client.on('message', message => {
-if(message.content.startsWith('%s')) {
-if(message.author.id !== "387107653148475393") return;
-var args = message.content.split(' ').slice(1).join(' ');
-message.channel.send(args);
-message.delete()
-}
-});
- 
-
-
 client.on("guildMemberAdd", member => {
   member.createDM().then(function (channel) {
   return channel.send(`**ولكم نورت السيرفر
@@ -557,8 +545,6 @@ welcome to __KilS CommunitY__**
  `) 
 }).catch(console.error)
 })
-
-
 
 
 
