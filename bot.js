@@ -11,44 +11,81 @@ client.on('ready', () => {
 ////////////////////////////////////////////////////////////
 
 
-client.on("message", msg => { //Narox Dev
-    if(msg.author.bot) return;
-    if(msg.channel.type === 'dm') return;
-  let prefix = '%'; //البرفكس
-  let msgarray = msg.content.split(" ");
-  let cmd = msgarray[0];
-  let args = msgarray.slice(1);
-  if(cmd === `${prefix}انذار`){
-    
-    
-  
-    let rUser = msg.guild.member(msg.mentions.users.first() || msg.guild.members.get(args[0]));
-  if(!rUser) return msg.channel.send("Couldn't find users.");
-      let reason = args.join(" ").slice(22);
-  
-      let reportembed = new Discord.RichEmbed()
-      .setDescription("Warn")
-      .setColor("RANDOM")
-      .addField("Warn User", `${rUser} with ID: ${rUser.id}`)
-      .addField("Warn By", `${msg.author} with ID: ${msg.author.id}`)
-      .addField("Channel", msg.channel)
-      .addField("Time", msg.createdAt)
-      .addField("Reason",`${reason}`)
-      
-      
-      let reportchannel = msg.guild.channels.find(`name`,"log"); //حط هنا اسم الروم الي يوريك بعض المعلومات
-      if(!reportchannel) return msg.channel.send("Couldn't find `log` channel. "); //ط هنا اسم الروم الي يوريك بعض المعلومات
-      
-      msg.delete().catch(O_o=>{});
-      reportchannel.send(reportembed);
-      let role = msg.guild.roles.find(`name`, '⊘─Warning'); 
-      if(!role) return msg.guild.channel.send("Could't find `Warn` role."); 
-      rUser.addRole(role);
-      
-          return;
-      }
+const temp = {};
+client.on('message', async message => {
+ if(message.channel.type === "dm") return;
+  if(message.author.bot) return;
+   if(!temp[message.guild.id]) temp[message.guild.id] = {
+    time: "3000",
+     category : 'Temporary Channels',
+      channel : 'انشاء روم مؤقت'
+       }
+        if(message.content.startsWith('-temp on')){
+         if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
+          var ggg= message.guild.createChannel('Temporary Channels', 'category').then(cg => {
+           var ccc =message.guild.createChannel('انشاء روم مؤقت', 'voice').then(ch => {
+            ch.setParent(cg)
+             message.channel.send('**:white_check_mark:  تم تفعيل الخاصية بنجاح **')
+              client.on('message' , message => {
+               if(message.content === '-temp off') {
+                if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
+                 cg.delete()
+                  ch.delete()
+                   message.channel.send('**:white_check_mark:  تم تعطيل الخاصية بنجاح **  ')
+                    }
+                     });
+                      const time = temp[message.guild.id].time
+                       client.on('message' , message => {
+                        if (message.content.startsWith(prefix + "temp time")) {
+                         if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
+                          let newTime= message.content.split(' ').slice(1).join(" ")
+                          if(!newTime) return message.reply(`**${prefix}temptime <time>  \`1000 = 1s\`**`)
+                     if(isNaN(newTime)) return message.reply(`** The Time Be Nambers :face_palm: **`);
+                    if(newTime < 1) return message.reply(`**The Time Be Up \`3000s\`**`)
+                       temp[message.guild.id].time = newTime
+                      message.channel.send(`**:white_check_mark:  تم حفظ التغييرات  - \`${newTime}\`**`);
+                     }
+                    });
+                   client.on('voiceStateUpdate', (old, neww) => {
+                  let newUserChannel = neww.voiceChannel
+                 let oldUserChannel = old.voiceChannel
+                temp[message.guild.id].category = cg.id
+               temp[message.guild.id].channel = ch.id
+              let channel = temp[message.guild.id].channel
+             let category = temp[message.guild.id].category
+            if(oldUserChannel === undefined && newUserChannel !== undefined && newUserChannel.id == channel) {
+           neww.guild.createChannel(neww.displayName , 'voice').then(c => {
+          c.setParent(category)
+         let scan = setTimeout(()=>{
+        if(!neww.voiceChannel) {
+       c.delete();
+      client.channels.get(channel).overwritePermissions(neww, {
+     CONNECT:true,
+    SPEAK:true
+   })
+  }
+ }, temp[neww.guild.id].time);
+  c.overwritePermissions(neww, {
+   CONNECT:true,
+    SPEAK:true,
+     MANAGE_CHANNEL:true,
+      MUTE_MEMBERS:true,
+       DEAFEN_MEMBERS:true,
+    MOVE_MEMBERS:true,
+     VIEW_CHANNEL:true
+      })
+       neww.setVoiceChannel(c)
+            })
+             client.channels.get(channel).overwritePermissions(neww, {
+          CONNECT:false,
+           SPEAK:false
+        })
+               }
+              })
+             })
+           })
+          }
       });
-
 
 
 /////////////////////////////////تجربت اكواد
