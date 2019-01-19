@@ -11,82 +11,43 @@ client.on('ready', () => {
 ////////////////////////////////////////////////////////////
 
 
-client.on('message', message => {
-    if(message.content.startsWith(prefix + "antifake on")) {
-        if(!message.channel.guild) return message.reply('**This Command Only For Servers**');
-        if(!message.member.hasPermission('MANAGE_GUILD')) return message.channel.send('**Sorry But You Dont Have Permission** `MANAGE_GUILD`' );
-antijoin[message.guild.id] = {
-onoff: 'On',
-}
-message.channel.send(`**✅ The AntiJoin Is __𝐎𝐍__ !**`)
-          fs.writeFile("./antijoin.json", JSON.stringify(antijoin), (err) => {
-            if (err) return console.error(err)
-            .catch(err => {
-              console.error(err);
-          });
-            });
-          }
- 
-        })
- 
- 
- 
-client.on('message', message => {
-    if(message.content.startsWith(prefix + "antifake off")) {
-        if(!message.channel.guild) return message.reply('**This Command Only For Servers**');
-        if(!message.member.hasPermission('MANAGE_GUILD')) return message.channel.send('**Sorry But You Dont Have Permission** `MANAGE_GUILD`' );
-antijoin[message.guild.id] = {
-onoff: 'Off',
-}
-message.channel.send(`**⛔ The AntiJoin Is __𝐎𝐅𝐅__ !**`)
-          fs.writeFile("./antijoin.json", JSON.stringify(antijoin), (err) => {
-            if (err) return console.error(err)
-            .catch(err => {
-              console.error(err);
-          });
-            });
-          }
- 
-        })
-         client.on('message', message => {
-          if (!message.channel.guild) return;
-   if(message.content.startsWith(prefix + "setfake")) {
-          let time = message.content.split(" ").slice(1).join(" ");
-       if(!message.channel.guild) return message.reply('**This Command Only For Servers**');
-       if(!message.member.hasPermission('MANAGE_GUILD')) return message.channel.send('**Sorry But You Dont Have Permission** `MANAGE_GUILD`' );
-if (!time) return message.channel.send('Please Type The Account Created Time [Days]');
-let embed = new Discord.RichEmbed()
-.setTitle('**Done The AntiJoin Code Has Been Setup**')
-.addField('Account Create Time:', `${time}.`)
-.addField('Requested By:', `${message.author}`)
-.setThumbnail(message.author.avatarURL)
-.setFooter(`${client.user.username}`)
-message.channel.sendEmbed(embed)
-antijoin[message.guild.id] = {
-created: time,
-onoff: 'On',
-}
-fs.writeFile("./antijoin.json", JSON.stringify(antijoin), (err) => {
-if (err) console.error(err)
-})
-   }})
- 
-client.on("guildMemberAdd", async member => {
-  if(!antijoin[member.guild.id]) antijoin[member.guild.id] = {
-    onoff: 'Off'
-  }
-  if(antijoin[member.guild.id].onoff === 'Off') return;
-  if(!member.user.bot) return;
-    let accounttime = `${antijoin[member.guild.id].created}`
-    let moment2 = require('moment-duration-format'),
-        moment = require("moment"),
-        date = moment.duration(new Date() - member.user.createdAt).format("d");
- 
-    if(date < accounttime) {
-      member.ban(`Member account age is lower than ${antijoin[member.guild.id].created} days.`)
-    }
-});
-
+client.on("message", msg => { //Narox Dev
+    if(msg.author.bot) return;
+    if(msg.channel.type === 'dm') return;
+  let prefix = '%'; //البرفكس
+  let msgarray = msg.content.split(" ");
+  let cmd = msgarray[0];
+  let args = msgarray.slice(1);
+  if(cmd === `${prefix}انذار`){
+    
+    
+  
+    let rUser = msg.guild.member(msg.mentions.users.first() || msg.guild.members.get(args[0]));
+  if(!rUser) return msg.channel.send("Couldn't find users.");
+      let reason = args.join(" ").slice(22);
+  
+      let reportembed = new Discord.RichEmbed()
+      .setDescription("Warn")
+      .setColor("RANDOM")
+      .addField("Warn User", `${rUser} with ID: ${rUser.id}`)
+      .addField("Warn By", `${msg.author} with ID: ${msg.author.id}`)
+      .addField("Channel", msg.channel)
+      .addField("Time", msg.createdAt)
+      .addField("Reason",`${reason}`)
+      
+      
+      let reportchannel = msg.guild.channels.find(`name`,"log"); //حط هنا اسم الروم الي يوريك بعض المعلومات
+      if(!reportchannel) return msg.channel.send("Couldn't find `log` channel. "); //ط هنا اسم الروم الي يوريك بعض المعلومات
+      
+      msg.delete().catch(O_o=>{});
+      reportchannel.send(reportembed);
+      let role = msg.guild.roles.find(`name`, '⊘─Warning'); 
+      if(!role) return msg.guild.channel.send("Could't find `Warn` role."); 
+      rUser.addRole(role);
+      
+          return;
+      }
+      });
 
 
 
