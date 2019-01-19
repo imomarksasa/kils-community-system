@@ -12,6 +12,9 @@ client.on('ready', () => {
 
 
 
+
+
+
 /////////////////////////////////تجربت اكواد
 
 
@@ -496,32 +499,29 @@ msg.reply('**ۏ؏ــڷــﯧْۧــڬــمۭ ۛ ּا̍ڶــڛۣــﻼ̍ۙ�
 //////////////////////////////////////////////////اوامر ممنوع تعملها
 
 
-
-
-////يبند اي شخص ينشر
-client.on('message', message => {
-    if (message.content.includes('discord.gg')){
-                        if(!message.channel.guild) return message.reply ('')
-                    if (!message.member.hasPermissions(['MANAGE_MESSAGES'])){
-       message.channel.send('ban <@' + message.author.id + '>')
-       message.delete() 
-       }
+client.on('message', function(message) {
+    if (!message.member.hasPermissions(['ADMINISTRATOR'])){
+            let command = message.content.split(" ")[0];
+        if(message.content.includes('discord.gg')){
+        message.reply (' ')
+           if(!message.channel.guild) return message.reply('** This command only for servers**');
+     message.member.addRole(message.guild.roles.find('name', 'Muted')); 
+    const embed500 = new Discord.RichEmbed()
+      .setTitle("**❌ | تمت معاقبتك**")
+            .addField(`** لقد قمت بمخالفة قوانين السيرفر من خلال نشر سيرفرات اخرى  **` , `**ان كأن هاذه الميوت عن طريق الخطأ تواصل مع احد اعضاء الادارة**`)
+      .addField(`KilS`,`Server`)
+            .setColor("c91616")
+            .setThumbnail(`${message.author.avatarURL}`)
+            .setAuthor(message.author.username, message.author.avatarURL) 
+        .setFooter(`${message.guild.name} Server`)
+     message.channel.send(embed500) 
+    
+        
     }
-          if (message.content.startsWith("ban ")) {
-             if(!message.member.hasPermission('ADMINISTRATOR')) return message.reply();
-             var member= message.mentions.members.first();
-             member.ban().then((member) => {
-                 message.channel.sendMessage("", {embed: {
-                 author: {
-                 },
-                 title: 'بسبب النشر | ' + member.displayName + ' | تم تبنيدك',
-                 color: 490101,
-                 }
-               });
-           }
-         ) 
-       }
-   });
+    }
+})
+
+
 
 
 
