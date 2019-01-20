@@ -12,7 +12,7 @@ client.on('ready', () => {
 
 
 client.on('ready', function(){
-    var ms = 9000 ;
+    var ms = 10000 ;
     var setGame = [' %help | By hassan_games ','وما بعد الحب 💔 الا وجع القلب لا تعيش فــ وهم ',' الحب 💖 هو كل شي ' ];
     var i = -1;
     var j = 0;
