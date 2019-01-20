@@ -13,7 +13,7 @@ client.on('ready', () => {
 
 client.on('ready', function(){
     var ms = 10000 ;
-    var setGame = [' %help | By hassan_games ','وما بعد الحب💔الا وجع القلب لا تعيش فـ وهم | الحب 💖 هو كل شي ' ];
+    var setGame = [' %help | By hassan_games ','وما بعد الحب💔الا وجع القلب لا تعيش فـ وهم ',' الحب 💖 هو كل شي ' ];
     var i = -1;
     var j = 0;
     setInterval(function (){
@@ -75,7 +75,6 @@ client.on('ready', () => {
       console.log(`ON ${client.guilds.size} Servers '     Script By : i1Suhaib ' `);
     console.log(`----------------`);
   console.log(`Logged in as ${client.user.tag}!`);
-client.user.setGame(`%help | By hassan_games`,"http://twitch.tv/S-F")
 client.user.setStatus("dnd")
 });
 
