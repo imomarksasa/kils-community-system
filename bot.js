@@ -502,7 +502,6 @@ client.on('message', async message => {
           color: "#000000",
           permissions:[]
         })
-        message.channel.send(`<@${message.author.id}`);
         message.guild.channels.forEach(async (channel, id) => {
           await channel.overwritePermissions(muterole, {
             SEND_MESSAGES: false,
