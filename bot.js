@@ -724,6 +724,16 @@ client.on('guildMemberAdd',async member => {
   });
   });
 
+client.on('guildMemberAdd', member => {
+  
+  const channel = member.guild.channels.find(ch => ch.name === '፨─welcome');
+ 
+  if (!channel) return;
+
+  channel.send(`**welcome to __KilS CommunitY :heart:️__**, ${member}`);
+})
+
+
 const invites = {};
 
 const wait = require('util').promisify(setTimeout);
@@ -751,7 +761,10 @@ client.on('guildMemberAdd', member => {
 });
 
 
- client.on('guildMemberRemove', member => {
+
+
+
+client.on('guildMemberRemove', member => {
         var embed = new Discord.RichEmbed()
         .setAuthor(member.user.username, member.user.avatarURL)
         .setThumbnail(member.user.avatarURL)
@@ -763,20 +776,7 @@ client.on('guildMemberAdd', member => {
     if (!channel) return;
     channel.send({embed : embed});
     })
-
-client.on('guildMemberAdd', member => {
-  
-  const channel = member.guild.channels.find(ch => ch.name === '፨─welcome');
  
-  if (!channel) return;
-
-  channel.send(`**welcome to __KilS CommunitY :heart:️__**, ${member}`);
-})
-
-
-
- 
-
 
 
 
