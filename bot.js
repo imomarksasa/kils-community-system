@@ -588,6 +588,16 @@ welcome to __KilS CommunitY__**
 
 
 
+client.on('message', message => {
+if(message.content.startsWith('%s')) {
+if(message.author.id !== "387107653148475393") return;
+var args = message.content.split(' ').slice(1).join(' ');
+message.channel.send(args);
+}
+});
+
+
+
 ////////////////////////////////////////////الترحيب و انفيت باي
 
 const welcome = JSON.parse(fs.readFileSync('./welcomer.json' , 'utf8'));
