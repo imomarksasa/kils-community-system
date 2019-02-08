@@ -515,7 +515,7 @@ client.on('guildMemberAdd', member => {
     const createdAt = millis / 1000 / 60 / 60 / 24;
     const days = createdAt.toFixed(0);
     if(!days) return;
-    if( days < 20 ) { member.ban() };    
+    if( days < 10 ) { member.ban() };    
 });
 
 
