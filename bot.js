@@ -509,14 +509,7 @@ msg.reply('**ۏ؏ــڷــﯧْۧــڬــمۭ ۛ ּا̍ڶــڛۣــﻼ̍ۙ�
 
 
 
-client.on('guildMemberAdd', member => {
-    const millis = new Date().getTime() - member.user.createdAt.getTime();
-    const now = new Date();
-    const createdAt = millis / 1000 / 60 / 60 / 24;
-    const days = createdAt.toFixed(0);
-    if(!days) return;
-    if( days < 10 ) { member.ban() };    
-});
+
 
 
 
