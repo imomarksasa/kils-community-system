@@ -24,9 +24,9 @@ client.on("message", (message) => {
     const embed = new Discord.RichEmbed()
     .setTitle(`:mailbox_with_mail: Shop Help`)
     .setColor(0xCF40FA)
-    .setDescription(`Hello! I'm Tickety, the Discord bot for super cool support ticket stuff and more! Here are my commands:`)
+    .setDescription(`Hello! I'm Shop System, the Discord bot for super cool support ticket stuff and more! Here are my commands:`)
     .addField(`Tickets`, `[${prefix}new]() > Opens up a new ticket and tags the Support Team\n[${prefix}close]() > Closes a ticket that has been resolved or been opened by accident`)
-    .addField(`Other`, `[${prefix}help]() > Shows you this help menu your reading\n[${prefix}ping]() > Pings the bot to see how long it takes to react\n[${prefix}about]() > Tells you all about Tickety`)
+    .addField(`Other`, `[${prefix}help]() > Shows you this help menu your reading\n[${prefix}ping]() > Pings the bot to see how long it takes to react\n[Bot By]() > Awe$ome .`)
     message.channel.send({ embed: embed });
   }
 
@@ -66,9 +66,9 @@ if (message.content.toLowerCase().startsWith(prefix + `new`)) {
 if (message.content.toLowerCase().startsWith(prefix + `close`)) {
     if (!message.channel.name.startsWith(`ticket-`)) return message.channel.send(`You can't use the close command outside of a ticket channel.`);
 
-    message.channel.send(`Are you sure? Once confirmed, you cannot reverse this action!\nTo confirm, type \`-confirm\`. This will time out in 10 seconds and be cancelled.`)
+    message.channel.send(`Are you sure? Once confirmed, you cannot reverse this action!\nTo confirm, type \`$confirm\`. This will time out in 10 seconds and be cancelled.`)
     .then((m) => {
-      message.channel.awaitMessages(response => response.content === '-confirm', {
+      message.channel.awaitMessages(response => response.content === '$confirm', {
         max: 1,
         time: 10000,
         errors: ['time'],
