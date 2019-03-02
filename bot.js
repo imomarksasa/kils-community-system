@@ -136,7 +136,7 @@ if (message.content.startsWith('$setavatar')) {
 }
 });
 
-Members .
+
 
 client.on('guildMemberAdd', member=> {
     member.addRole(member.guild.roles.find("name","Members ."));
