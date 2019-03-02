@@ -1,102 +1,89 @@
-const Discord  = require('discord.js');
-const client     = new Discord.Client();
-const prefix   = "#";
-const category = "531541533275586578";
-const devs     = ["496585065673916417"];
-let createt   = true;
-let tchannels  = [];
-let current    = 0;
+const Discord = require("discord.js");
+const client = new Discord.Client();
 
-client.login(process.env.BOT_TOKEN);
+function clean(text) {
+    if (typeof(text) === "string")
+      return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+    else
+        return text;
+}
 
-client.on('ready',async () => console.log(`   - " ${client.user.username} " , Tickety is ready to work.`));
-client.on('message',async message => {
-    const emojis   = { yes: `${client.guilds.find(r => r.id === '551440538801274891').emojis.find(e => e.name === 'Yes')}`, wrong: `${client.guilds.find(r => r.id === '551440538801274891').emojis.find(e => e.name === 'Wrong')}` };
-    if(message.author.bot || message.channel.type === 'dm') return;
-    let args = message.content.split(" ");
-    let author = message.author.id;
-    if(args[0].toLowerCase() === `${prefix}help`) {
-            let embed = new Discord.RichEmbed()
-            .setAuthor(message.author.username, message.author.avatarURL)
-            .setThumbnail(message.author.avatarURL)
-            .setColor("#36393e")
-            .addField(`❯ لعمل تكت, \`${prefix}new\``, `» Example: \`${prefix}new [Reason]\`\n» Description: **لعمل روم فقط يظهر لك ولأدارة السيرفر.**`)
-            .addField(`❯ قائمة الأوامر, \`${prefix}help\``, `» Example: \`${prefix}help\`\n» Description: **يظهر لك جميع اوامر البوت.**`)
-            .addField(`❯ لإيقاف الأعضاء من عمل تكتات, \`${prefix}createt\``, `» Example: \`${prefix}createt [Disable/Enable]\`\n» Description: **لجعل جميع اعضاء السيرفر غير قادرون على عمل تكت.**`)
-			.addField(`❯ لأقفال جميع التكتات المفتوحة, \`${prefix}deleteall\``, `» Example: \`${prefix}deleteall\`\n» Description: **لمسح جميع رومات التكتات المفتوحة في السيرفر**`)
-            .addField(`❯ لقفل التكت المفتوح, \`${prefix}close\``, `» Example: \`${prefix}close\`\n» Description: **لأقفال تكت.**\n\n Bot.`)
-            await message.channel.send(`${emojis.yes}, **هذه قائمة بجميع اوامر البووت.**`);
-            await message.channel.send(embed);
-    } else if(args[0].toLowerCase() === `${prefix}new`) {
-        if(createt === false) return message.channel.send(`${emojis.wrong}, **تم ايقاف هذه الخاصية من قبل احد ادارة السيرفر**`);
-        if(!message.guild.me.hasPermission("MANAGE_CHANNELS")) return message.channel.send(`${emojis.wrong}, **البوت لا يملك صلاحيات لصنع الروم**`);
-		console.log(current);
-		let openReason = "";
-		current++;
-    	message.guild.createChannel(`ticket-#${current}`, 'text').then(c => {
-		tchannels.push(c.id);
-		c.setParent(category);
-		message.channel.send(`${emojis.yes}, **تم عمل التكت.**`);
-		c.overwritePermissions(message.guild.id, {
-			READ_MESSAGES: false,
-			SEND_MESSAGES: false
-		});
-		c.overwritePermissions(message.author.id, {
-			READ_MESSAGES: true,
-			SEND_MESSAGES: true
-		});
-		
-		if(args[1]) openReason = `\nسبب فتح التكت , " **${args.slice(1).join(" ")}** "`;
-		let embed = new Discord.RichEmbed()
-		.setAuthor(message.author.username, message.author.avatarURL)
-		.setColor("#36393e")
-		.setDescription(`**الرجاء الانتظار الى حين مجيء احد اعضاء الادارة والرد عليك**${openReason}`);
-		c.send(`${message.author}`);
-		c.send(embed);
-	});
-    } else if(args[0].toLowerCase() === `${prefix}createt`) {
-        if(!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(`${emojis.wrong}, **أنت لست من ادارة السيرفر لتنفيذ هذا الأمر.**`);
-		if(args[1] && args[1].toLowerCase() === "enable") {
-			createt = true;
-			message.channel.send(`${emojis.yes}, **تم تفعيل التكتات , الاَن يمكن لأعضاء السيرفر استخدام امر انشاء التكت**`);
-		} else if(args[1] && args[1].toLowerCase() === "disable") {
-			createt = false;
-			message.channel.send(`${emojis.yes}, **تم اغلاق نظام التكتات , الاَن لا يمكن لأي عضو استخدام هذا الأمر**`);
-		} else if(!args[1]) {
-			if(createt === true) {
-			createt = false;
-			message.channel.send(`${emojis.yes}, **تم اغلاق نظام التكتات , الاَن لا يمكن لأي عضو استخدام هذا الأمر**`);
-			} else if(createt === false) {
-			createt = true;
-			message.channel.send(`${emojis.yes}, **تم تفعيل التكتات , الاَن يمكن لأعضاء السيرفر استخدام امر انشاء التكت**`);
-			}
-		}
-    } else if(args[0].toLowerCase() === `${prefix}close`) {
-		if(!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(`${emojis.wrong}, **أنت لست من ادارة السيرفر لتنفيذ هذا الأمر.**`);
-		if(!message.channel.name.startsWith('rgticket-') && !tchannels.includes(message.channel.id)) return message.channel.send(`${emojis.wrong}, **هذا الروم ليس من رومات التكت.**`);
-		
-		message.channel.send(`${emojis.yes}, **سيتم اغلاق الروم في 3 ثواني من الاَن.**`);
-		tchannels.splice( tchannels.indexOf(message.channel.id), 1 );
-		setTimeout(() => message.channel.delete(), 3000);
-	} else if(args[0].toLowerCase() === `${prefix}restart`) {
-		if(!devs.includes(message.author.id)) return message.channel.send(`${emojis.wrong}, **أنت لست من ادارة السيرفر لأستخدام هذا الأمر.**`);
-		message.channel.send(`${emojis.yes}, **جارى اعادة تشغيل البوت.**`);
-		client.destroy();
-		client.login(process.env.BOT_TOKEN);
-	} else if(args[0].toLowerCase() === `${prefix}deleteall`) {
-		let iq = 0;
-		for(let q = 0; q < tchannels.length; q++) {
-			let c = message.guild.channels.get(tchannels[q]);
-			if(c) {
-				c.delete();
-				tchannels.splice( tchannels[q], 1 );
-				iq++;
-			}
-			if(q === tchannels.length - 1 || q === tchannels.lengh + 1) {
-				message.channel.send(`${emojis.yes}, **تم مسح \`${iq}\` من التكتات.**`);
-			}
-		}
-	}
+const prefix = "$";
+const token = client.login(process.env.BOT_TOKEN);
+
+client.on("ready", () => {
+  console.log("Tickety | Logged in! Server count: ${client.guilds.size}");
+  client.user.setGame(`Shop Plugins - Bot |${prefix}new`);
+});
+
+
+client.on("message", (message) => {
+  if (!message.content.startsWith(prefix) || message.author.bot) return;
+
+  if (message.content.toLowerCase().startsWith(prefix + `help`)) {
+    const embed = new Discord.RichEmbed()
+    .setTitle(`:mailbox_with_mail: Shop Help`)
+    .setColor(0xCF40FA)
+    .setDescription(`Hello! I'm Tickety, the Discord bot for super cool support ticket stuff and more! Here are my commands:`)
+    .addField(`Tickets`, `[${prefix}new]() > Opens up a new ticket and tags the Support Team\n[${prefix}close]() > Closes a ticket that has been resolved or been opened by accident`)
+    .addField(`Other`, `[${prefix}help]() > Shows you this help menu your reading\n[${prefix}ping]() > Pings the bot to see how long it takes to react\n[${prefix}about]() > Tells you all about Tickety`)
+    message.channel.send({ embed: embed });
+  }
+
+  if (message.content.toLowerCase().startsWith(prefix + `ping`)) {
+    message.channel.send(`Hoold on!`).then(m => {
+    m.edit(`:ping_pong: Wew, made it over the ~waves~ ! **Pong!**\nMessage edit time is ` + (m.createdTimestamp - message.createdTimestamp) + `ms, Discord API heartbeat is ` + Math.round(client.ping) + `ms.`);
+    });
+}
+
+if (message.content.toLowerCase().startsWith(prefix + `new`)) {
+    const reason = message.content.split(" ").slice(1).join(" ");
+    if (!message.guild.roles.exists("name", "بـائع")) return message.channel.send(`This server doesn't have a \`Support Team\` role made, so the ticket won't be opened.\nIf you are an administrator, make one with that name exactly and give it to users that should be able to see tickets.`);
+    if (message.guild.channels.exists("name", "ticket-" + message.author.id)) return message.channel.send(`You already have a ticket open.`);
+    message.guild.createChannel(`ticket-${message.author.id}`, "text").then(c => {
+        let role = message.guild.roles.find("name", "بـائع");
+        let role2 = message.guild.roles.find("name", "@everyone");
+        c.overwritePermissions(role, {
+            SEND_MESSAGES: true,
+            READ_MESSAGES: true
+        });
+        c.overwritePermissions(role2, {
+            SEND_MESSAGES: false,
+            READ_MESSAGES: false
+        });
+        c.overwritePermissions(message.author, {
+            SEND_MESSAGES: true,
+            READ_MESSAGES: true
+        });
+        message.channel.send(`:white_check_mark: Your ticket has been created, #${c.name}.`);
+        const embed = new Discord.RichEmbed()
+        .setColor(0xCF40FA)
+        .addField(`Hey ${message.author.username}!`, `Please try explain why you opened this ticket with as much detail as possible. Our **Support Team** will be here soon to help.`)
+        .setTimestamp();
+        c.send({ embed: embed });
+    }).catch(console.error);
+}
+if (message.content.toLowerCase().startsWith(prefix + `close`)) {
+    if (!message.channel.name.startsWith(`ticket-`)) return message.channel.send(`You can't use the close command outside of a ticket channel.`);
+
+    message.channel.send(`Are you sure? Once confirmed, you cannot reverse this action!\nTo confirm, type \`-confirm\`. This will time out in 10 seconds and be cancelled.`)
+    .then((m) => {
+      message.channel.awaitMessages(response => response.content === '-confirm', {
+        max: 1,
+        time: 10000,
+        errors: ['time'],
+      })
+      .then((collected) => {
+          message.channel.delete();
+        })
+        .catch(() => {
+          m.edit('Ticket close timed out, the ticket was not closed.').then(m2 => {
+              m2.delete();
+          }, 3000);
+        });
+    });
+}
+
 });
  
 
