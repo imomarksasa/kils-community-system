@@ -87,6 +87,55 @@ if (message.content.toLowerCase().startsWith(prefix + `close`)) {
 });
  
 
+client.on('ready',  () => {
+  console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'); 
+  console.log('by BadGuY');
+  console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+  console.log(`Logged in as  * [ " ${client.user.username} " ] servers! [ " ${client.guilds.size} " ]`);
+  console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+  console.log('is online')
+client.user.setStatus("dnd");
+});
+
+
+
+
+
+
+const devs = ["321476121956974595 , 338984673080246273"];
+const adminprefix = ["-"];
+client.on('message', message => {
+    var argresult = message.content.split(` `).slice(1).join(' ');
+      if (!devs.includes(message.author.id)) return;
+      
+  if (message.content.startsWith('$ply')) {
+    client.user.setGame(argresult);
+      message.channel.send(`**✅   ${argresult}**`)
+  } else 
+     if (message.content === ("3eb3eb3eb")) {
+    message.guild.leave();        
+  } else  
+  if (message.content.startsWith('$wt')) {
+  client.user.setActivity(argresult, {type:'WATCHING'});
+      message.channel.send(`**✅   ${argresult}**`)
+  } else 
+  if (message.content.startsWith('$mils')) {
+  client.user.setActivity(argresult , {type:'LISTENING'});
+      message.channel.send(`**✅   ${argresult}**`)
+  } else 
+  if (message.content.startsWith('$st')) {
+    client.user.setGame(argresult, "https://www.twitch.tv/idk");
+      message.channel.send(`**✅**`)
+  }
+  if (message.content.startsWith('$setname')) {
+  client.user.setUsername(argresult).then
+      message.channel.send(`تم تغيير اسم البوت الى ..**${argresult}** `)
+} else
+if (message.content.startsWith('$setavatar')) {
+  client.user.setAvatar(argresult);
+    message.channel.send(`تم تغيير صورة البوت :**${argresult}** `);
+}
+});
 
 
 // THIS  MUST  BE  THIS  WAY
