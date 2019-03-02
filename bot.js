@@ -136,6 +136,13 @@ if (message.content.startsWith('$setavatar')) {
 }
 });
 
+Members .
+
+client.on('guildMemberAdd', member=> {
+    member.addRole(member.guild.roles.find("name","Members ."));
+    });
+
+
 
 // THIS  MUST  BE  THIS  WAY
 client.login(process.env.BOT_TOKEN);
