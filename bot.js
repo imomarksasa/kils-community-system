@@ -13,7 +13,6 @@ const token = client.login(process.env.BOT_TOKEN);
 
 client.on("ready", () => {
   console.log("Tickety | Logged in! Server count: ${client.guilds.size}");
-  client.user.setGame(`Shop Plugins - Bot |${prefix}new`);
 });
 
 
